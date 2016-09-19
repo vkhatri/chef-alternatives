@@ -2,10 +2,15 @@
 
 This file is used to list changes made in each version of the alternatives cookbook.
 
+0.1.1
+-----
+
+- Virender Khatri - updated README for correct cookbook version
+
 0.1.0
 -----
 
-- Virender Khatri - Initial release of alternatives
+- Virender Khatri - initial release of alternatives
 
 - - -
 Check the [Markdown Syntax Guide](http://daringfireball.net/projects/markdown/syntax) for help with Markdown.

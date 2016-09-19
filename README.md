@@ -1,7 +1,7 @@
 alternatives Cookbook
 ================
 
-[![Cookbook](http://img.shields.io/badge/cookbook-v0.0.1-green.svg)](https://github.com/vkhatri/chef-alternatives) [![Build Status](https://travis-ci.org/vkhatri/chef-alternatives.svg?branch=master)](https://travis-ci.org/vkhatri/chef-alternatives)
+[![Cookbook](http://img.shields.io/badge/cookbook-v0.1.1-green.svg)](https://github.com/vkhatri/chef-alternatives) [![Build Status](https://travis-ci.org/vkhatri/chef-alternatives.svg?branch=master)](https://travis-ci.org/vkhatri/chef-alternatives)
 
 This is a [Chef] cookbook to manage to manage binary alternatives using linux command altneratives/update-alternatives.
 
@@ -10,13 +10,13 @@ This is a [Chef] cookbook to manage to manage binary alternatives using linux co
 ## Most Recent Release
 
 ```ruby
-cookbook 'alternatives', '~> 0.0.1'
+cookbook 'alternatives', '~> 0.1.1'
 ```
 
 ## From Git
 
 ```ruby
-cookbook 'alternatives', github: 'vkhatri/chef-alternatives',  tag: "v0.0.1"
+cookbook 'alternatives', github: 'vkhatri/chef-alternatives',  tag: "v0.1.1"
 ```
 
 ## Repository
