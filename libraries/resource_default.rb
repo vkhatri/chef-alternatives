@@ -25,7 +25,6 @@ class Chef
       def link(arg = nil)
         set_or_return(
           :link, arg,
-          :required => true,
           :kind_of => String,
           :default => nil
         )
