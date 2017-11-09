@@ -1,7 +1,7 @@
 alternatives Cookbook
 ================
 
-[![Cookbook](https://img.shields.io/github/tag/vkhatri/chef-alternatives)](https://github.com/vkhatri/chef-alternatives) [![Build Status](https://travis-ci.org/vkhatri/chef-alternatives.svg?branch=master)](https://travis-ci.org/vkhatri/chef-alternatives)
+[![Cookbook](https://img.shields.io/github/tag/vkhatri/chef-alternatives.svg)](https://github.com/vkhatri/chef-alternatives) [![Build Status](https://travis-ci.org/vkhatri/chef-alternatives.svg?branch=master)](https://travis-ci.org/vkhatri/chef-alternatives)
 
 This is a [Chef] cookbook to manage Linux cmd alternatives using alternatives/update-alternatives.
 
