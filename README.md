@@ -3,7 +3,7 @@ alternatives Cookbook
 
 [![Cookbook](http://img.shields.io/badge/cookbook-v0.1.1-green.svg)](https://github.com/vkhatri/chef-alternatives) [![Build Status](https://travis-ci.org/vkhatri/chef-alternatives.svg?branch=master)](https://travis-ci.org/vkhatri/chef-alternatives)
 
-This is a [Chef] cookbook to manage to manage binary alternatives using linux command altneratives/update-alternatives.
+This is a [Chef] cookbook to manage binary alternatives using linux command altneratives/update-alternatives.
 
 >> For Production environment, always prefer the [most recent release](https://supermarket.chef.io/cookbooks/alternatives).
 
@@ -34,7 +34,6 @@ This cookbook was tested on CentOS 6.8, 7.2 and Ubuntu 14.04.
 
 LWRP `alternatives` install/remove/set/refresh/auto binary alternatives.
 
-
 **LWRP install alternative**
 
 ```ruby
@@ -42,18 +41,6 @@ alternatives 'python install 2' do
   link_name 'python'
   path '/usr/bin/python2.7'
   priority 100
-  action :install
-end
-```
-
-
-**LWRP remove alternative**
-
-```ruby
-alternatives 'python install 3' do
-  link_name 'python'
-  path '/usr/bin/python3'
-  priority 101
   action :install
 end
 ```
