@@ -10,7 +10,7 @@ class Chef
         @provides = :alternatives
         @provider = Chef::Provider::Alternatives
         @action = :display
-        @allowed_actions = [:install, :remove, :auto, :set, :refresh, :nothing]
+        @allowed_actions = %i[install remove auto set refresh nothing]
         @name = name
       end
 

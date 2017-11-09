@@ -6,11 +6,11 @@
 # found at http://inspec.io/docs/reference/resources/
 
 describe file('/usr/local/sample-binary-1') do
-	it { should exist }
+  it { should exist }
 end
 
 describe file('/usr/local/sample-binary-2') do
-	it { should exist }
+  it { should exist }
 end
 
 describe file('/usr/bin/sample-binary') do
