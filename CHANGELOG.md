@@ -2,6 +2,17 @@
 
 This file is used to list changes made in each version of the alternatives cookbook.
 
+0.2.0
+-----
+
+- Virender Khatri - fixed README for #1 [ci skip]
+
+- Virender Khatri - added inspec, travis, kitchen dokken, test cookbook
+
+- Virender Khatri - attribute link is not required
+
+- Virender Khatri - lint fix
+
 0.1.1
 -----
 

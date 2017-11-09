@@ -1,22 +1,22 @@
 alternatives Cookbook
 ================
 
-[![Cookbook](http://img.shields.io/badge/cookbook-v0.1.1-green.svg)](https://github.com/vkhatri/chef-alternatives) [![Build Status](https://travis-ci.org/vkhatri/chef-alternatives.svg?branch=master)](https://travis-ci.org/vkhatri/chef-alternatives)
+[![Cookbook](https://img.shields.io/github/tag/vkhatri/chef-alternatives)](https://github.com/vkhatri/chef-alternatives) [![Build Status](https://travis-ci.org/vkhatri/chef-alternatives.svg?branch=master)](https://travis-ci.org/vkhatri/chef-alternatives)
 
-This is a [Chef] cookbook to manage binary alternatives using linux command altneratives/update-alternatives.
+This is a [Chef] cookbook to manage Linux cmd alternatives using alternatives/update-alternatives.
 
 >> For Production environment, always prefer the [most recent release](https://supermarket.chef.io/cookbooks/alternatives).
 
 ## Most Recent Release
 
 ```ruby
-cookbook 'alternatives', '~> 0.1.1'
+cookbook 'alternatives', '~> 0.2.0'
 ```
 
 ## From Git
 
 ```ruby
-cookbook 'alternatives', github: 'vkhatri/chef-alternatives',  tag: "v0.1.1"
+cookbook 'alternatives', github: 'vkhatri/chef-alternatives',  tag: "v0.2.0"
 ```
 
 ## Repository
@@ -27,7 +27,11 @@ https://github.com/vkhatri/chef-alternatives
 
 ## Supported Platforms
 
-This cookbook was tested on CentOS 6.8, 7.2 and Ubuntu 14.04.
+- CentOS
+- Fedora
+- Amazon
+- Ubuntu
+- Debian
 
 
 ## LWRP alternatives
