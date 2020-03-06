@@ -6,7 +6,7 @@ description 'Provides Chef LWRP alternatives'
 version '0.2.0'
 source_url 'https://github.com/vkhatri/chef-alternatives'
 issues_url 'https://github.com/vkhatri/chef-alternatives/issues'
-chef_version '>= 12.1'
+chef_version '>= 12.11'
 
 %w(debian ubuntu centos amazon redhat fedora).each do |os|
   supports os
