@@ -4,23 +4,52 @@ property :path, String
 property :priority, [String, Integer]
 
 action :install do
-  alternatives_install
+  raise 'missing :priority' unless new_resource.priority
+  validate_path
+  priority = path_priority
+  link = link_name
+  if priority != new_resource.priority
+    converge_by("adding alternative #{link} #{new_resource.link_name} #{new_resource.path} #{new_resource.priority}") do
+      output = shell_out("#{alternatives_cmd} --install #{link} #{new_resource.link_name} #{new_resource.path} #{new_resource.priority}")
+      unless output.exitstatus == 0
+        raise "failed to add alternative #{link} #{new_resource.link_name} #{new_resource.path} #{new_resource.priority}"
+      end
+    end
+  end
 end
 
 action :set do
-  alternatives_set
+  validate_path
+  path = current_path
+  if path != new_resource.path
+    converge_by("setting alternative #{new_resource.link_name} #{new_resource.path}") do
+      output = shell_out("#{alternatives_cmd} --set #{new_resource.link_name} #{new_resource.path}")
+      unless output.exitstatus == 0
+        raise "failed to set alternative #{new_resource.link_name} #{new_resource.path} \n #{output.stdout.strip}"
+      end
+    end
+  end
 end
 
 action :remove do
-  alternatives_remove
+  validate_path
+  if path_exists
+    converge_by("removing alternative #{new_resource.link_name} #{new_resource.path}") do
+      shell_out("#{alternatives_cmd} --remove #{new_resource.link_name} #{new_resource.path}")
+    end
+  end
 end
 
 action :auto do
-  alternatives_auto
+  converge_by("setting auto alternative #{new_resource.link_name}") do
+    shell_out("#{alternatives_cmd} --auto #{new_resource.link_name}")
+  end
 end
 
 action :refresh do
-  alternatives_refresh
+  converge_by("refreshing alternative #{new_resource.link_name}") do
+    shell_out("#{alternatives_cmd} --refresh #{new_resource.link_name}")
+  end
 end
 
 action_class do
@@ -75,54 +104,5 @@ action_class do
 
   def link_name
     new_resource.link || "/usr/bin/#{new_resource.link_name}"
-  end
-
-  def alternatives_install
-    raise 'missing :priority' unless new_resource.priority
-    validate_path
-    priority = path_priority
-    link = link_name
-    if priority != new_resource.priority
-      converge_by("adding alternative #{link} #{new_resource.link_name} #{new_resource.path} #{new_resource.priority}") do
-        output = shell_out("#{alternatives_cmd} --install #{link} #{new_resource.link_name} #{new_resource.path} #{new_resource.priority}")
-        unless output.exitstatus == 0
-          raise "failed to add alternative #{link} #{new_resource.link_name} #{new_resource.path} #{new_resource.priority}"
-        end
-      end
-    end
-  end
-
-  def alternatives_set
-    validate_path
-    path = current_path
-    if path != new_resource.path
-      converge_by("setting alternative #{new_resource.link_name} #{new_resource.path}") do
-        output = shell_out("#{alternatives_cmd} --set #{new_resource.link_name} #{new_resource.path}")
-        unless output.exitstatus == 0
-          raise "failed to set alternative #{new_resource.link_name} #{new_resource.path} \n #{output.stdout.strip}"
-        end
-      end
-    end
-  end
-
-  def alternatives_remove
-    validate_path
-    if path_exists
-      converge_by("removing alternative #{new_resource.link_name} #{new_resource.path}") do
-        shell_out("#{alternatives_cmd} --remove #{new_resource.link_name} #{new_resource.path}")
-      end
-    end
-  end
-
-  def alternatives_refresh
-    converge_by("refreshing alternative #{new_resource.link_name}") do
-      shell_out("#{alternatives_cmd} --refresh #{new_resource.link_name}")
-    end
-  end
-
-  def alternatives_auto
-    converge_by("setting auto alternative #{new_resource.link_name}") do
-      shell_out("#{alternatives_cmd} --auto #{new_resource.link_name}")
-    end
   end
 end
