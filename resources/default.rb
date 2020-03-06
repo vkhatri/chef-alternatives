@@ -25,7 +25,7 @@ end
 
 action_class do
   def alternatives_cmd
-    if platform_family?('rhel') || platform_family?('centos')
+    if platform_family?('rhel', 'amazon', 'fedora')
       'alternatives'
     else
       'update-alternatives'
