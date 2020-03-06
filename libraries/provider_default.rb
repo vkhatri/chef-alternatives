@@ -5,11 +5,7 @@ class Chef
   class Provider
     # provides alternatives
     class Alternatives < Chef::Provider::LWRPBase
-      provides :alternatives if respond_to?(:provides)
-
-      def whyrun_supported?
-        true
-      end
+      provides :alternatives
 
       action :install do
         alternatives_install
@@ -56,34 +52,30 @@ class Chef
 
       def path_priority
         output = shell_out("#{alternatives_cmd} --display #{new_resource.link_name} | grep #{new_resource.path} | sed -n -e 's/^.*priority //p'")
-        if output.exitstatus.zero?
+        if output.exitstatus == 0
           output = output.stdout.strip
           if output.empty?
-            return nil
+            nil
           else
             output.to_i
           end
-        else
-          return nil
         end
       end
 
       def current_path
         output = shell_out("#{alternatives_cmd} --display #{new_resource.link_name} | sed -n -e 's/^.*link currently points to //p'")
-        if output.exitstatus.zero?
+        if output.exitstatus == 0
           output = output.stdout.strip
           if output.empty?
-            return nil
+            nil
           else
             output
           end
-        else
-          return nil
         end
       end
 
       def path_exists
-        shell_out("#{alternatives_cmd} --display #{new_resource.link_name} | grep priority | grep #{new_resource.path}").exitstatus.zero?
+        shell_out("#{alternatives_cmd} --display #{new_resource.link_name} | grep priority | grep #{new_resource.path}").exitstatus == 0
       end
 
       def link_name
@@ -98,7 +90,7 @@ class Chef
         if priority != new_resource.priority
           converge_by("adding alternative #{link} #{new_resource.link_name} #{new_resource.path} #{new_resource.priority}") do
             output = shell_out("#{alternatives_cmd} --install #{link} #{new_resource.link_name} #{new_resource.path} #{new_resource.priority}")
-            unless output.exitstatus.zero?
+            unless output.exitstatus == 0
               raise "failed to add alternative #{link} #{new_resource.link_name} #{new_resource.path} #{new_resource.priority}"
             end
           end
@@ -112,7 +104,7 @@ class Chef
         if path != new_resource.path
           converge_by("setting alternative #{new_resource.link_name} #{new_resource.path}") do
             output = shell_out("#{alternatives_cmd} --set #{new_resource.link_name} #{new_resource.path}")
-            unless output.exitstatus.zero?
+            unless output.exitstatus == 0
               raise "failed to set alternative #{new_resource.link_name} #{new_resource.path} \n #{output.stdout.strip}"
             end
           end
@@ -125,7 +117,7 @@ class Chef
         if path_exists
           converge_by("removing alternative #{new_resource.link_name} #{new_resource.path}") do
             output = shell_out("#{alternatives_cmd} --remove #{new_resource.link_name} #{new_resource.path}")
-            new_resource.updated_by_last_action(true) if output.exitstatus.zero?
+            new_resource.updated_by_last_action(true) if output.exitstatus == 0
           end
         end
       end
@@ -133,14 +125,14 @@ class Chef
       def alternatives_refresh
         converge_by("refreshing alternative #{new_resource.link_name}") do
           output = shell_out("#{alternatives_cmd} --refresh #{new_resource.link_name}")
-          new_resource.updated_by_last_action(true) if output.exitstatus.zero?
+          new_resource.updated_by_last_action(true) if output.exitstatus == 0
         end
       end
 
       def alternatives_auto
         converge_by("setting auto alternative #{new_resource.link_name}") do
           output = shell_out("#{alternatives_cmd} --auto #{new_resource.link_name}")
-          new_resource.updated_by_last_action(true) if output.exitstatus.zero?
+          new_resource.updated_by_last_action(true) if output.exitstatus == 0
         end
       end
     end

@@ -5,8 +5,8 @@ require 'rubocop/rake_task'
 require 'rspec/core/rake_task'
 
 desc 'Run all lints'
-task :lint => %w(foodcritic rubocop spec)
-task :default => :lint
+task lint: %w(foodcritic rubocop spec)
+task default: :lint
 
 desc 'Run Rubocop Lint Task'
 task :rubocop do
@@ -16,7 +16,7 @@ end
 desc 'Run Food Critic Lint Task'
 task :foodcritic do
   FoodCritic::Rake::LintTask.new do |fc|
-    fc.options = {:fail_tags => ['any']}
+    fc.options = { fail_tags: ['any'] }
   end
 end
 
