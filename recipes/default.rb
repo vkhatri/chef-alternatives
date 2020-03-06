@@ -1,8 +1,8 @@
 #
-# Cookbook Name:: alternatives
+# Cookbook:: alternatives
 # Recipe:: default
 #
-# Copyright 2016, Virender Khatri
+# Copyright:: 2016, Virender Khatri
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,3 +16,5 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
+Chef::Log.warn('The alternatives::default cookbook has no recipes. See the readme for information on using the alternatives resource in your recipes.')
