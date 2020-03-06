@@ -1,7 +1,7 @@
 property :link_name, String, name_property: true
 property :link, String, default: lazy { |n| "/usr/bin/#{n.link_name}" }
 property :path, String
-property :priority, [String, Integer]
+property :priority, [String, Integer], coerce: proc { |n| n.to_i }
 
 action :install do
   raise 'missing :priority' unless new_resource.priority
@@ -61,10 +61,6 @@ action_class do
     end
   end
 
-  def link_path
-    new_resource.link ? new_resource.link : "/usr/bin/#{new_resource.link_name}"
-  end
-
   def validate_path
     unless new_resource.path
       raise "could not set alternatives for #{new_resource.link_name}, must provide :path"
@@ -75,15 +71,11 @@ action_class do
   end
 
   def path_priority
-    output = shell_out("#{alternatives_cmd} --display #{new_resource.link_name} | grep #{new_resource.path} | sed -n -e 's/^.*priority //p'")
-    if output.exitstatus == 0
-      output = output.stdout.strip
-      if output.empty?
-        nil
-      else
-        output.to_i
-      end
-    end
+    # https://rubular.com/r/IcUlEU0mSNaMm3
+    escaped_path = Regexp.new(Regexp.escape("#{new_resource.path} - priority ") + '(.*)')
+    match = shell_out("#{alternatives_cmd} --display #{new_resource.link_name}").stdout.match(escaped_path)
+
+    match.nil? ? nil : match[1].to_i
   end
 
   def current_path
