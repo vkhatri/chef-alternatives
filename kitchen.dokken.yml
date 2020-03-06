@@ -112,7 +112,6 @@ suites:
       inspec_tests:
         - test/smoke/default_test
     run_list:
-      - recipe[alternatives::default]
       - recipe[alternatives_test::default]
 
   - name: chef13
@@ -122,5 +121,4 @@ suites:
       inspec_tests:
         - test/smoke/default_test
     run_list:
-      - recipe[alternatives::default]
       - recipe[alternatives_test::default]
