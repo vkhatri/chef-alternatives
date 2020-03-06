@@ -1,18 +1,17 @@
 property :link_name, String, name_property: true
-property :link, String
+property :link, String, default: lazy { |n| "/usr/bin/#{n.link_name}" }
 property :path, String
 property :priority, [String, Integer]
 
 action :install do
   raise 'missing :priority' unless new_resource.priority
   validate_path
-  priority = path_priority
-  link = link_name
-  if priority != new_resource.priority
-    converge_by("adding alternative #{link} #{new_resource.link_name} #{new_resource.path} #{new_resource.priority}") do
-      output = shell_out("#{alternatives_cmd} --install #{link} #{new_resource.link_name} #{new_resource.path} #{new_resource.priority}")
+
+  if path_priority != new_resource.priority
+    converge_by("adding alternative #{new_resource.link} #{new_resource.link_name} #{new_resource.path} #{new_resource.priority}") do
+      output = shell_out("#{alternatives_cmd} --install #{new_resource.link} #{new_resource.link_name} #{new_resource.path} #{new_resource.priority}")
       unless output.exitstatus == 0
-        raise "failed to add alternative #{link} #{new_resource.link_name} #{new_resource.path} #{new_resource.priority}"
+        raise "failed to add alternative #{new_resource.link} #{new_resource.link_name} #{new_resource.path} #{new_resource.priority}"
       end
     end
   end
@@ -20,8 +19,8 @@ end
 
 action :set do
   validate_path
-  path = current_path
-  if path != new_resource.path
+
+  if current_path != new_resource.path
     converge_by("setting alternative #{new_resource.link_name} #{new_resource.path}") do
       output = shell_out("#{alternatives_cmd} --set #{new_resource.link_name} #{new_resource.path}")
       unless output.exitstatus == 0
@@ -33,7 +32,8 @@ end
 
 action :remove do
   validate_path
-  if path_exists
+
+  if path_exists?
     converge_by("removing alternative #{new_resource.link_name} #{new_resource.path}") do
       shell_out("#{alternatives_cmd} --remove #{new_resource.link_name} #{new_resource.path}")
     end
@@ -87,22 +87,14 @@ action_class do
   end
 
   def current_path
-    output = shell_out("#{alternatives_cmd} --display #{new_resource.link_name} | sed -n -e 's/^.*link currently points to //p'")
-    if output.exitstatus == 0
-      output = output.stdout.strip
-      if output.empty?
-        nil
-      else
-        output
-      end
-    end
+    # https://rubular.com/r/ylsuvzUtquRPqc
+    match = shell_out("#{alternatives_cmd} --display #{new_resource.link_name}").stdout.match(/link currently points to (.*)/)
+    match.nil? ? nil : match[1]
   end
 
-  def path_exists
-    shell_out("#{alternatives_cmd} --display #{new_resource.link_name} | grep priority | grep #{new_resource.path}").exitstatus == 0
-  end
-
-  def link_name
-    new_resource.link || "/usr/bin/#{new_resource.link_name}"
+  def path_exists?
+    # https://rubular.com/r/ogvDdq8h2IKRff
+    escaped_path = Regexp.new(Regexp.escape("#{new_resource.path} - priority"))
+    shell_out("#{alternatives_cmd} --display #{new_resource.link_name}").stdout.match?(escaped_path)
   end
 end
