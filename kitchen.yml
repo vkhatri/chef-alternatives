@@ -32,16 +32,14 @@ suites:
 suites:
   - name: chef12
     provisioner:
-      require_chef_omnibus: 12
+      require_chef_omnibus: 12.11
     verifier:
       inspec_tests:
         - test/smoke/default_test
     run_list:
       - recipe[alternatives_test::default]
 
-  - name: chef13
-    provisioner:
-      require_chef_omnibus: 13
+  - name: latest_chef
     verifier:
       inspec_tests:
         - test/smoke/default_test

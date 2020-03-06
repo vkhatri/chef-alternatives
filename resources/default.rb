@@ -89,7 +89,6 @@ action_class do
           raise "failed to add alternative #{link} #{new_resource.link_name} #{new_resource.path} #{new_resource.priority}"
         end
       end
-      new_resource.updated_by_last_action(true)
     end
   end
 
@@ -103,7 +102,6 @@ action_class do
           raise "failed to set alternative #{new_resource.link_name} #{new_resource.path} \n #{output.stdout.strip}"
         end
       end
-      new_resource.updated_by_last_action(true)
     end
   end
 
@@ -111,23 +109,20 @@ action_class do
     validate_path
     if path_exists
       converge_by("removing alternative #{new_resource.link_name} #{new_resource.path}") do
-        output = shell_out("#{alternatives_cmd} --remove #{new_resource.link_name} #{new_resource.path}")
-        new_resource.updated_by_last_action(true) if output.exitstatus == 0
+        shell_out("#{alternatives_cmd} --remove #{new_resource.link_name} #{new_resource.path}")
       end
     end
   end
 
   def alternatives_refresh
     converge_by("refreshing alternative #{new_resource.link_name}") do
-      output = shell_out("#{alternatives_cmd} --refresh #{new_resource.link_name}")
-      new_resource.updated_by_last_action(true) if output.exitstatus == 0
+      shell_out("#{alternatives_cmd} --refresh #{new_resource.link_name}")
     end
   end
 
   def alternatives_auto
     converge_by("setting auto alternative #{new_resource.link_name}") do
-      output = shell_out("#{alternatives_cmd} --auto #{new_resource.link_name}")
-      new_resource.updated_by_last_action(true) if output.exitstatus == 0
+      shell_out("#{alternatives_cmd} --auto #{new_resource.link_name}")
     end
   end
 end
