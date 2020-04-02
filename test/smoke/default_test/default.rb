@@ -1,6 +1,6 @@
 # # encoding: utf-8
 
-# Inspec test for recipe alternatives_test::v1
+# InSpec test for recipe alternatives_test::v1
 
 # The Inspec reference, with examples and extensive documentation, can be
 # found at http://inspec.io/docs/reference/resources/

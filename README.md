@@ -1,9 +1,8 @@
-alternatives Cookbook
-================
+# alternatives Cookbook
 
 [![Cookbook](https://img.shields.io/github/tag/vkhatri/chef-alternatives.svg)](https://github.com/vkhatri/chef-alternatives) [![Build Status](https://travis-ci.org/vkhatri/chef-alternatives.svg?branch=master)](https://travis-ci.org/vkhatri/chef-alternatives)
 
-This is a [Chef] cookbook to manage Linux cmd alternatives using alternatives/update-alternatives.
+This is a [Chef Infra] cookbook to manage Linux cmd alternatives using alternatives/update-alternatives.
 
 >> For Production environment, always prefer the [most recent release](https://supermarket.chef.io/cookbooks/alternatives).
 
@@ -33,12 +32,11 @@ https://github.com/vkhatri/chef-alternatives
 - Ubuntu
 - Debian
 
+## alternatives resource
 
-## LWRP alternatives
+`alternatives` resource to install/remove/set/refresh/auto binary alternatives.
 
-LWRP `alternatives` install/remove/set/refresh/auto binary alternatives.
-
-**LWRP install alternative**
+**install alternatives**
 
 ```ruby
 alternatives 'python install 2' do
@@ -49,7 +47,7 @@ alternatives 'python install 2' do
 end
 ```
 
-**LWRP set alternative**
+**set alternative**
 
 ```ruby
 alternatives 'python set version 3' do
@@ -59,7 +57,7 @@ alternatives 'python set version 3' do
 end
 ```
 
-**LWRP auto alternative**
+**auto alternative**
 
 ```ruby
 alternatives 'python auto' do
@@ -68,7 +66,7 @@ alternatives 'python auto' do
 end
 ```
 
-**LWRP refresh alternative**
+**refresh alternative**
 
 ```ruby
 alternatives 'python refresh' do
@@ -77,7 +75,7 @@ alternatives 'python refresh' do
 end
 ```
 
-**LWRP remove alternative**
+**remove alternative**
 
 ```ruby
 alternatives 'python remove' do
@@ -87,10 +85,16 @@ alternatives 'python remove' do
 end
 ```
 
+**Resource Actions**
 
-**LWRP Options**
+- *:install* (default)
+- *:remove*
+- *:set*
+- *:auto*
+- *:refresh*
 
-- *action* (optional) - default `:install`, options: :install, :remove, :set, :auto, :refresh
+**Resource Properties**
+
 - *link_name* (optional, String)  - default `@name`, alternatives link name
 - *link* (optional, String)  - alternatives link
 - *path* (optional, String)  - alternatives link path

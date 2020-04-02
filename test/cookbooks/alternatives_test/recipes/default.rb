@@ -8,14 +8,14 @@ file '/usr/local/sample-binary-1' do
   content '#!/bin/bash
   echo sample-binary-v1
   '
-  mode 0o500
+  mode '500'
 end
 
 file '/usr/local/sample-binary-2' do
   content '#!/bin/bash
   echo sample-binary-v2
   '
-  mode 0o550
+  mode '550'
 end
 
 alternatives 'sample-binary v1' do
