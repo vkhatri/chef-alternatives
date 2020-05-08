@@ -9,13 +9,13 @@ This is a [Chef Infra] cookbook to manage Linux cmd alternatives using alternati
 ## Most Recent Release
 
 ```ruby
-cookbook 'alternatives', '~> 0.2.0'
+cookbook 'alternatives', '~> 0.3.0'
 ```
 
 ## From Git
 
 ```ruby
-cookbook 'alternatives', github: 'vkhatri/chef-alternatives',  tag: "v0.2.0"
+cookbook 'alternatives', github: 'vkhatri/chef-alternatives',  tag: "v0.3.0"
 ```
 
 ## Repository
